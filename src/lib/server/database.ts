@@ -13,7 +13,7 @@ export const createDBFile = () => {
 
 export const createTable = (db: sqlite3.Database) => {
 	const query =
-		'CREATE TABLE IF NOT EXISTS haste_list (shortcode TEXT PRIMARY KEY, text TEXT, created_at INTEGER)';
+		'CREATE TABLE IF NOT EXISTS haste_list (slug TEXT PRIMARY KEY, text TEXT, created_at INTEGER)';
 	db.run(query, (err) => {
 		if (err) {
 			throw err;
@@ -21,9 +21,10 @@ export const createTable = (db: sqlite3.Database) => {
 	});
 };
 
-export const insertHaste = (db: sqlite3.Database, shortcode: string, text: string) => {
-	const query = 'INSERT INTO haste_list (shortcode, text, created_at) VALUES (?, ?, ?)';
-	db.run(query, [shortcode, text, Date.now()], (err) => {
+export const insertHaste = (db: sqlite3.Database, slug: string, text: string) => {
+	const query = 'INSERT INTO haste_list (slug, text, created_at) VALUES (?, ?, ?)';
+	text = encodeURI(text);
+	db.run(query, [slug, text, Date.now()], (err) => {
 		if (err) {
 			throw err;
 		}
@@ -35,10 +36,10 @@ export const insertHaste = (db: sqlite3.Database, shortcode: string, text: strin
 	deleteOldHastes(db);
 };
 
-export const getHaste = async (db: sqlite3.Database, shortcode: string) => {
-	const query = 'SELECT * FROM haste_list WHERE shortcode = ?';
+export const getHaste = async (db: sqlite3.Database, slug: string) => {
+	const query = 'SELECT * FROM haste_list WHERE slug = ?';
 	const result = await new Promise((resolve, reject) => {
-		db.get(query, [shortcode], (err, row) => {
+		db.get(query, [slug], (err, row) => {
 			if (err) {
 				reject(err);
 			} else {
@@ -48,11 +49,11 @@ export const getHaste = async (db: sqlite3.Database, shortcode: string) => {
 	});
 
 	return match(result)
-		.with({ shortcode: P.string, text: P.string, created_at: P.number }, (row) => {
+		.with({ slug: P.string, text: P.string, created_at: P.number }, (row) => {
 			return {
-				shortcode: row.shortcode,
-				text: row.text,
-				created_at: new Date(row.created_at),
+				slug: row.slug,
+				text: decodeURI(row.text),
+				created_at: row.created_at,
 			} as Haste;
 		})
 		.otherwise(() => {

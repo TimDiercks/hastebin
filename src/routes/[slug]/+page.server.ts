@@ -1,0 +1,15 @@
+import { error } from '@sveltejs/kit';
+import { getHaste } from '$lib/server/database.js';
+import type { PageServerLoad } from './$types';
+
+export const load: PageServerLoad = async ({ params, locals }) => {
+	const haste = await getHaste(locals.db, params.slug);
+
+	if (haste) {
+		return {
+			content: haste.text,
+		};
+	}
+
+	error(404, 'Not found');
+};

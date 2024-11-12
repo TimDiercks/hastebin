@@ -1,4 +1,4 @@
-import { createDBFile, createTable, getHaste } from '$lib/server/database';
+import { createDBFile, createTable } from '$lib/server/database';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -11,8 +11,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 		// We can create a basic table in the db
 		createTable(db);
-
-		console.log(await getHaste(db, 'test'));
 	}
 	const resp = await resolve(event);
 	return resp;
