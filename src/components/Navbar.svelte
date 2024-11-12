@@ -3,7 +3,7 @@
 	import { callbackSaveHaste } from '$lib/navbarCallbacks';
 	import type { IconButtonProps, Tooltip } from '$lib/types';
 	import IconButton from './IconButton.svelte';
-	import { get } from 'svelte/store';
+
 	let currentTooltip: Tooltip | undefined;
 
 	const navActions: IconButtonProps[] = [
