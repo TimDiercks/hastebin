@@ -39,5 +39,8 @@ export const callbackDuplicate = () => {
 
 export const callbackRawHaste = () => {
 	const slug = get(page).url.pathname.replace('/', '');
+	if (slug === '') {
+		return;
+	}
 	goto(`raw/${slug}`);
 };
