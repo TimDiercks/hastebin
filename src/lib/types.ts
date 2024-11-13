@@ -16,5 +16,6 @@ export interface IconButtonProps {
 	ariaLabel: string;
 	label: string;
 	callback: () => void;
+	isDisabled?: () => boolean;
 	tooltip: Tooltip;
 }
