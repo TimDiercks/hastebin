@@ -2,9 +2,11 @@ import sqlite3 from 'sqlite3';
 import { HASTE_LIFETIME, MAX_TEXT_LENGTH } from './config';
 import { match, P } from 'ts-pattern';
 import type { Haste } from '$lib/types';
+import { dev } from '$app/environment';
 
 export const createDBFile = () => {
-	return new sqlite3.Database('data/db.sqlite', (err) => {
+	const filePath = dev ? '' : 'data/';
+	return new sqlite3.Database(`${filePath}db.sqlite`, (err) => {
 		if (err) {
 			throw err;
 		}
