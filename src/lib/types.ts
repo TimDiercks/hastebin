@@ -13,6 +13,7 @@ export interface Tooltip {
 
 export interface IconButtonProps {
 	icon: IconifyIcon | string;
+	ariaLabel: string;
 	label: string;
 	callback: () => void;
 	tooltip: Tooltip;

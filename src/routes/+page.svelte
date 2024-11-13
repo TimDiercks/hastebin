@@ -2,7 +2,6 @@
 	import { textStore } from '../stores';
 	import type { PageData } from './$types';
 
-
 	let { data }: { data: PageData } = $props();
 </script>
 
@@ -12,7 +11,7 @@
 	<meta property="og:description" content="Simple text and code sharing" />
 </svelte:head>
 
-<div class="h-full p-6">
+<div class="h-full p-6 pt-28 md:pt-6">
 	<textarea
 		maxlength={data.maxTextLength}
 		bind:value={$textStore}

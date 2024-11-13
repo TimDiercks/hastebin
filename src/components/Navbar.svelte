@@ -8,7 +8,8 @@
 	const navActions: IconButtonProps[] = [
 		{
 			icon: 'mdi:content-save',
-			label: 'save hastebin',
+			ariaLabel: 'save hastebin',
+			label: 'save',
 			callback: () => callbackSaveHaste(),
 			tooltip: {
 				title: 'Save',
@@ -17,7 +18,8 @@
 		},
 		{
 			icon: 'mdi:file-document-plus',
-			label: 'create new hastebin',
+			ariaLabel: 'create new hastebin',
+			label: 'new',
 			callback: () => callbackNewHaste(),
 			tooltip: {
 				title: 'New',
@@ -26,7 +28,8 @@
 		},
 		{
 			icon: 'mdi:file-edit',
-			label: 'copy text into new hastebin',
+			ariaLabel: 'copy text into new hastebin',
+			label: 'edit',
 			callback: () => callbackDuplicate(),
 			tooltip: {
 				title: 'Duplicate & Edit',
@@ -35,7 +38,8 @@
 		},
 		{
 			icon: 'mdi:raw',
-			label: 'see raw hastebin',
+			ariaLabel: 'see raw hastebin',
+			label: 'raw',
 			callback: () => callbackRawHaste(),
 			tooltip: {
 				title: 'Raw',
@@ -45,19 +49,22 @@
 	];
 </script>
 
-<nav class="fixed right-0 top-0 flex w-52 flex-col rounded-bl-xl bg-slate-900 p-4 text-slate-400">
-	<h1 class="mb-4 text-center text-3xl font-bold text-slate-400 hover:text-slate-100">
-		<a href="/">HasteTim</a>
-	</h1>
-	<ul class="flex justify-between" on:pointerleave={() => (currentTooltip = undefined)}>
-		{#each navActions as { icon, label, callback, tooltip }}
-			<li on:pointerenter={() => (currentTooltip = tooltip)}>
-				<IconButton {callback} {icon} {label} />
-			</li>
-		{/each}
-	</ul>
+<nav 
+	class="z-50 fixed w-full right-0 top-0 flex md:w-52 flex-col md:gap-0 gap-4 md:rounded-bl-xl bg-slate-900 p-4 text-slate-400 md:h-16 md:hover:h-52 transition-all overflow-hidden">
+	<div class="w-full flex justify-between items-center md:flex-col">
+		<h1 class="ml-4 md:ml-0 md:mb-4 text-center text-3xl font-bold text-slate-400 hover:text-slate-100">
+			<a href="/">HasteTim</a>
+		</h1>
+		<ul class="flex md:w-full w-1/2 justify-evenly md:justify-between" on:pointerleave={() => (currentTooltip = undefined)}>
+			{#each navActions as { icon, ariaLabel, label, callback, tooltip }}
+				<li on:pointerenter={() => (currentTooltip = tooltip)}>
+					<IconButton {ariaLabel} {callback} {icon} {label} />
+				</li>
+			{/each}
+		</ul>
+	</div>
 	{#if currentTooltip}
-		<div class="w-full pt-4">
+		<div class="w-full pt-4 hidden md:block">
 			<h3 class="font-bold text-slate-200">{currentTooltip.title}</h3>
 			<span class="text-sm">{currentTooltip.description}</span>
 		</div>
