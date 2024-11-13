@@ -1,5 +1,5 @@
 import sqlite3 from 'sqlite3';
-import { HASTE_LIFETIME } from './config';
+import { HASTE_LIFETIME, MAX_TEXT_LENGTH } from './config';
 import { match, P } from 'ts-pattern';
 import type { Haste } from '$lib/types';
 
@@ -23,6 +23,9 @@ export const createTable = (db: sqlite3.Database) => {
 
 export const insertHaste = (db: sqlite3.Database, slug: string, text: string) => {
 	const query = 'INSERT INTO haste_list (slug, text, created_at) VALUES (?, ?, ?)';
+	if (text.length > MAX_TEXT_LENGTH) {
+		throw new Error('The given text is too long!');
+	}
 	slug = encodeURI(slug);
 	text = encodeURI(text);
 	db.run(query, [slug, text, Date.now()], (err) => {
