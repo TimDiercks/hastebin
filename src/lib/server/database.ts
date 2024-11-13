@@ -4,7 +4,7 @@ import { match, P } from 'ts-pattern';
 import type { Haste } from '$lib/types';
 
 export const createDBFile = () => {
-	return new sqlite3.Database('db.sqlite', (err) => {
+	return new sqlite3.Database('data/db.sqlite', (err) => {
 		if (err) {
 			throw err;
 		}
