@@ -1,12 +1,13 @@
 import { get } from 'svelte/store';
 import { textStore, viewHasteStore } from '../stores';
-import { createPhoneticKey } from './slugGeneration';
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 
 export const callbackSaveHaste = async () => {
 	const text = get(textStore);
-	const slug = createPhoneticKey(8);
+	if (text === '') {
+		return;
+	}
 
 	const response = await fetch('/api/addHaste', {
 		method: 'POST',
@@ -15,14 +16,13 @@ export const callbackSaveHaste = async () => {
 		},
 		body: JSON.stringify({
 			text,
-			slug,
 		}),
 	});
 
 	const result = await response.json();
 
 	if (result.success) {
-		goto(`/${slug}`);
+		goto(`/${result.slug}`);
 	}
 };
 
