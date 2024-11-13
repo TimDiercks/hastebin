@@ -1,7 +1,8 @@
 import { get } from 'svelte/store';
-import { textStore } from '../stores';
+import { textStore, viewHasteStore } from '../stores';
 import { createPhoneticKey } from './slugGeneration';
 import { goto } from '$app/navigation';
+import { page } from '$app/stores';
 
 export const callbackSaveHaste = async () => {
 	const text = get(textStore);
@@ -23,4 +24,20 @@ export const callbackSaveHaste = async () => {
 	if (result.success) {
 		goto(`/${slug}`);
 	}
+};
+
+export const callbackNewHaste = () => {
+	textStore.set('');
+	goto('/');
+};
+
+export const callbackDuplicate = () => {
+	textStore.set(get(viewHasteStore));
+	viewHasteStore.set('');
+	goto('/');
+};
+
+export const callbackRawHaste = () => {
+	const slug = get(page).url.pathname.replace('/', '');
+	goto(`raw/${slug}`);
 };

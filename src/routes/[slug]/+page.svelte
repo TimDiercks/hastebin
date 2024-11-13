@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { viewHasteStore } from '../../stores';
 
 	let { data }: { data: PageData } = $props();
+	$viewHasteStore = data.content;
 </script>
 
 <div class="p-4">
