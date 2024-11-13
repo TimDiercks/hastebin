@@ -1,6 +1,7 @@
 import { insertHaste } from '$lib/server/database.js';
+import type { RequestHandler } from './$types';
 
-export const POST = async ({ request, locals }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
 		const db = locals.db;
 		const body = await request.json();

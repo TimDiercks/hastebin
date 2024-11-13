@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { textStore } from '../stores';
 	import { callbackDuplicate, callbackNewHaste, callbackRawHaste, callbackSaveHaste } from '$lib/navbarCallbacks';
 	import type { IconButtonProps, Tooltip } from '$lib/types';
 	import IconButton from './IconButton.svelte';
