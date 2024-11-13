@@ -1,5 +1,5 @@
 import sqlite3 from 'sqlite3';
-import { MAX_TEXT_LENGTH } from './config';
+import { HASTE_LIFETIME, MAX_TEXT_LENGTH } from './config';
 import { match, P } from 'ts-pattern';
 import type { Haste } from '$lib/types';
 import { dev } from '$app/environment';
@@ -35,6 +35,11 @@ export const insertHaste = (db: sqlite3.Database, slug: string, text: string) =>
 			throw err;
 		}
 	});
+
+	// Delete old hastes whenever a new one is added
+	// This is done to prevent the database from growing indefinitely
+	// and is implemented like this to get around a cron job
+	deleteOldHastes(db);
 };
 
 export const getHaste = async (db: sqlite3.Database, slug: string) => {
@@ -61,6 +66,18 @@ export const getHaste = async (db: sqlite3.Database, slug: string) => {
 		.otherwise(() => {
 			throw new Error('No matching row found');
 		});
+};
+
+// Automatically delete old hastes after given time
+const deleteOldHastes = (db: sqlite3.Database) => {
+	const currentTime = Date.now();
+	const deleteBefore = currentTime - HASTE_LIFETIME;
+	const query = 'DELETE FROM haste_list WHERE created_at < ?';
+	db.run(query, [deleteBefore], (err) => {
+		if (err) {
+			throw err;
+		}
+	});
 };
 
 // This will be implemented when there is authentication
