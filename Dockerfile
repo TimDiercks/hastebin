@@ -3,7 +3,6 @@ FROM node:18.18.0-alpine AS builder
 WORKDIR /app
 
 COPY package*.json .
-COPY npm-lock.yaml .
 
 RUN npm i -g npm
 RUN npm install
