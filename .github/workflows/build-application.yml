@@ -1,0 +1,35 @@
+name: Build Docker image
+
+on:
+    push:
+        branches: ['main']
+    pull_request:
+        branches: ['main']
+
+env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: hastebin
+
+jobs:
+    build-frontend:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Build the Docker image
+              run: |
+                  docker build . --file server/Dockerfile --tag ghcr.io/timdiercks/$IMAGE_NAME:latest
+
+            - name: Log in to the Container registry
+              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Push Docker image
+              run: |
+                  docker push ghcr.io/timdiercks/$IMAGE_NAME:latest
