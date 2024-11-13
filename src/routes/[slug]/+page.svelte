@@ -13,5 +13,5 @@
 </svelte:head>
 
 <div class="p-4 pt-28 md:pt-4">
-	<pre class="rounded-xl bg-slate-700 p-4 text-slate-300"><code>{data.content}</code></pre>
+	<pre class="rounded-xl bg-slate-700 p-4 text-slate-300"><code class="text-wrap">{data.content}</code></pre>
 </div>
