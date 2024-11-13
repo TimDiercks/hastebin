@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { viewHasteStore } from '../../stores';
-	import Highlight, { LineNumbers } from 'svelte-highlight';
-	import typescript from 'svelte-highlight/languages/typescript';
+	import { HighlightAuto } from 'svelte-highlight';
+	import { LineNumbers } from 'svelte-highlight';
 
 	let { data }: { data: PageData } = $props();
 	$viewHasteStore = data.content;
@@ -16,8 +16,8 @@
 
 <div class="p-4 pt-28 md:pt-4">
 	<div class="overflow-hidden rounded-xl">
-		<Highlight language={typescript} code={data.content} let:highlighted>
+		<HighlightAuto code={data.content} let:highlighted>
 			<LineNumbers {highlighted} wrapLines hideBorder />
-		</Highlight>
+		</HighlightAuto>
 	</div>
 </div>
