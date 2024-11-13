@@ -31,7 +31,7 @@
 			callback: () => callbackDuplicate(),
 			tooltip: {
 				title: 'Duplicate & Edit',
-				description: 'Dublicated the haste into a new one',
+				description: 'Duplicate the haste into a new one',
 			},
 		},
 		{
