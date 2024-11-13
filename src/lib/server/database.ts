@@ -23,6 +23,7 @@ export const createTable = (db: sqlite3.Database) => {
 
 export const insertHaste = (db: sqlite3.Database, slug: string, text: string) => {
 	const query = 'INSERT INTO haste_list (slug, text, created_at) VALUES (?, ?, ?)';
+	slug = encodeURI(slug);
 	text = encodeURI(text);
 	db.run(query, [slug, text, Date.now()], (err) => {
 		if (err) {
@@ -37,6 +38,7 @@ export const insertHaste = (db: sqlite3.Database, slug: string, text: string) =>
 };
 
 export const getHaste = async (db: sqlite3.Database, slug: string) => {
+	slug = encodeURI(slug);
 	const query = 'SELECT * FROM haste_list WHERE slug = ?';
 	const result = await new Promise((resolve, reject) => {
 		db.get(query, [slug], (err, row) => {
@@ -51,7 +53,7 @@ export const getHaste = async (db: sqlite3.Database, slug: string) => {
 	return match(result)
 		.with({ slug: P.string, text: P.string, created_at: P.number }, (row) => {
 			return {
-				slug: row.slug,
+				slug: decodeURI(row.slug),
 				text: decodeURI(row.text),
 				created_at: row.created_at,
 			} as Haste;
