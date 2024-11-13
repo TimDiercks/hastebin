@@ -8,6 +8,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	if (haste) {
 		return {
 			content: haste.text,
+			slug: haste.slug,
 		};
 	}
 
