@@ -11,7 +11,7 @@
 	<meta property="og:description" content="Simple text and code sharing" />
 </svelte:head>
 
-<div class="h-full p-6 pt-28 md:pt-6">
+<div class="h-full p-4 pt-28 md:pt-4">
 	<textarea
 		maxlength={data.maxTextLength}
 		bind:value={$textStore}
