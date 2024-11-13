@@ -22,6 +22,7 @@ export const callbackSaveHaste = async () => {
 	const result = await response.json();
 
 	if (result.success) {
+		navigator.clipboard.writeText(get(page).url.href + `${result.slug}`);
 		goto(`/${result.slug}`);
 	}
 };
