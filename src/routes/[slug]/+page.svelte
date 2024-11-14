@@ -6,6 +6,13 @@
 
 	let { data }: { data: PageData } = $props();
 	$viewHasteStore = data.content;
+
+	const copyLinkCallback = () => {
+		navigator.clipboard.writeText(document.URL);
+	};
+	const copyHasteCallback = () => {
+		navigator.clipboard.writeText(data.content);
+	};
 </script>
 
 <svelte:head>
@@ -15,6 +22,10 @@
 </svelte:head>
 
 <div class="p-4 pt-28 md:pt-4">
+	<div class="buttonWrapper">
+		<button onclick={copyLinkCallback}>Copy link</button>
+		<button onclick={copyHasteCallback}>Copy haste</button>
+	</div>
 	<div class="overflow-hidden rounded-xl">
 		<HighlightAuto code={data.content} let:highlighted>
 			<LineNumbers {highlighted} wrapLines hideBorder />

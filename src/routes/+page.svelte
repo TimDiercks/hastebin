@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<meta property="og:site_name" content="HasteTim">
+	<meta property="og:site_name" content="HasteTim" />
 	<meta property="og:title" content="HasteTim" />
 	<meta property="og:description" content="Simple text and code sharing" />
 </svelte:head>

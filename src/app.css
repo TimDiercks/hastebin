@@ -3,3 +3,25 @@
 @import 'tailwindcss/utilities';
 
 @import './github.css';
+
+@layer components {
+	.navContainer {
+		@apply fixed right-0 top-0 z-50 flex w-full flex-col gap-4 bg-slate-900 p-4 md:h-auto md:w-52 md:gap-0 md:rounded-bl-xl;
+	}
+
+	.textHover {
+		@apply hover:text-slate-100;
+	}
+
+	.iconButton {
+		@apply disabled:text-slate-700;
+	}
+
+	button:not(.iconButton) {
+		@apply rounded-xl bg-slate-700 px-4 py-2 text-xl font-semibold text-slate-300 hover:bg-slate-600 active:bg-slate-500;
+	}
+
+	.buttonWrapper {
+		@apply mb-4 flex flex-row gap-4;
+	}
+}

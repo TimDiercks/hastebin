@@ -9,7 +9,12 @@
 	export let isDisabled: (() => boolean) | undefined;
 </script>
 
-<button class="hover:text-slate-100 disabled:text-slate-700" onclick={callback} aria-label={ariaLabel} disabled={isDisabled && isDisabled()}>
+<button
+	class="textHover iconButton"
+	onclick={callback}
+	aria-label={ariaLabel}
+	disabled={isDisabled && isDisabled()}
+>
 	<Icon height="30" {icon} />
 	<span class="md:hidden">
 		{label}
